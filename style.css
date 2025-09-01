@@ -39,6 +39,14 @@ body {
     font-size: 15px; /* 增加基础字体大小 */
 }
 
+.site-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px; /* 您可以根据需要调整Logo的高度 */
+    width: auto;
+}
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
@@ -191,8 +199,13 @@ body {
 .report-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 0; /* 改为0，以支持表格连接 */
     font-size: 14px; /* 增加表格字体大小 */
+}
+
+/* 当一个表格紧跟在另一个表格后面时，添加一个粗的上边框作为分隔符 */
+.report-table + .report-table {
+    border-top: 3px solid #e5e7eb;
 }
 
 .report-table th,
@@ -200,6 +213,10 @@ body {
     border: 1px solid #e5e7eb;
     padding: 8px;
     text-align: center;
+}
+
+.report-table .valign-middle {
+    vertical-align: middle;
 }
 
 .report-table th {
