@@ -36,6 +36,7 @@ body {
     background-color: var(--background-color);
     color: var(--text-primary);
     line-height: 1.6;
+    font-size: 15px; /* 增加基础字体大小 */
 }
 
 .container {
@@ -183,7 +184,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 15px; /* 增加字体大小 */
     color: var(--text-secondary);
 }
 
@@ -191,7 +192,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    font-size: 12px;
+    font-size: 14px; /* 增加表格字体大小 */
 }
 
 .report-table th,
@@ -206,6 +207,17 @@ body {
     font-weight: bold;
     color: var(--text-primary);
 }
+
+/* 列宽定义 */
+.report-table .col-item { width: 8%; }
+.report-table .col-date { width: 12%; }
+.report-table .col-type { width: 12%; }
+.report-table .col-condition { width: 12%; }
+.report-table .col-grade { width: 8%; }
+.report-table .col-percent { width: 8%; }
+.report-table .col-quantity { width: 12%; }
+.report-table .col-status { width: 10%; }
+
 
 .report-table .highlight {
     background-color: #fef3c7;
