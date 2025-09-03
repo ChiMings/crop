@@ -138,8 +138,28 @@ body {
     gap: 20px;
     margin-top: 30px;
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    font-family: "SimHei", "黑体", var(--font-family-system);
 }
+
+.instructions-section {
+    margin-top: 30px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: "SimHei", "黑体", var(--font-family-system);
+    line-height: 1.6;
+}
+
+.instructions-section h4 {
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.instructions-section ol {
+    padding-left: 20px;
+}
+
 .signature-item {
     display: flex;
     align-items: center;
@@ -193,7 +213,17 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
     font-size: 15px; /* 增加字体大小 */
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    font-family: "SimHei", "黑体", var(--font-family-system);
+}
+
+.report-unit-info {
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--text-primary);
+    font-family: "SimHei", "黑体", var(--font-family-system);
 }
 
 .report-table {
@@ -255,12 +285,10 @@ body {
 
 
 .report-table .highlight {
-    background-color: #fef3c7;
     font-weight: bold;
 }
 
 .report-table .warning {
-    background-color: #fee2e2;
     color: var(--danger-color);
     font-weight: bold;
 }

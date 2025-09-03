@@ -162,9 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
         totalLossEl.textContent = totalLoss.toFixed(2);
         actualLossEl.textContent = actualLoss.toFixed(2);
         actualLossRateEl.textContent = `${actualLossRate.toFixed(2)}%`;
-        overLossEl.textContent = overLoss.toFixed(2);
+        // 如果不超耗（即超耗数量为负数），则显示为0
+        overLossEl.textContent = Math.max(0, overLoss).toFixed(2);
         
-        // 4. 处理超耗状态
+        // 4. 处理超耗状态（使用原始overLoss值判断）
         handleOverLoss(overLoss);
 
         updateStatus('计算完成。');
@@ -297,14 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus(message) {
         statusText.textContent = message;
     }
-    
-    // 同步两个单位输入框
-    reportUnitTitleInput.addEventListener('input', () => {
-        reportUnitHeaderInput.value = reportUnitTitleInput.value;
-    });
-    reportUnitHeaderInput.addEventListener('input', () => {
-        reportUnitTitleInput.value = reportUnitHeaderInput.value;
-    });
     
     // --- 事件监听器绑定 ---
     calculateBtn.addEventListener('click', calculate);
