@@ -19,18 +19,18 @@
                     
                     <div class="report-preview">
                         <div class="report-title">
-                           (<input type="text" id="report-unit-title" class="inline-input" value="示例粮食储备库">) 粮食保管损耗报告单
+                           (<input type="text" id="report-unit-title" class="inline-input" value="">) 粮食保管损耗报告单
                         </div>
                         
                         <div class="report-header">
-                            <div>填报单位: <input type="text" id="report-unit-header" class="inline-input" value="示例粮食储备库"></div>
+                            <div>填报单位: <input type="text" id="report-unit-header" class="inline-input" value=""></div>
                             <div>填报时间:<input type="date" id="report-date" class="inline-input"></div>
                             <div>品种: 
                                 <select id="crop-type" class="inline-input">
                                     <!-- Options will be populated by script.js -->
                                 </select>
                             </div>
-                            <div>货位号: <input type="text" id="location-number" class="inline-input" value="A1-01"></div>
+                            <div>货位号: <input type="text" id="location-number" class="inline-input" value=""></div>
                         </div>
                         
                         <div style="text-align: right; margin-bottom: 10px; font-size: 12px;">
@@ -54,7 +54,7 @@
                             <tbody>
                                 <tr>
                                     <td>入库</td>
-                                    <td><input type="date" id="in-date" value="2023-10-01"></td>
+                                    <td><input type="date" id="in-date" value=""></td>
                                     <td>
                                         <select>
                                             <option value="气膜仓" selected>气膜仓</option>
@@ -83,14 +83,14 @@
                                             <option value="等外">等外</option>
                                         </select>
                                     </td>
-                                    <td><input type="number" step="0.1" id="in-moisture" value="14.0"></td>
-                                    <td><input type="number" step="0.1" id="in-impurity" value="1.0"></td>
-                                    <td><input type="number" step="0.01" id="in-quantity" value="50000.00" class="highlight"></td>
+                                    <td><input type="number" step="0.1" id="in-moisture" value=""></td>
+                                    <td><input type="number" step="0.1" id="in-impurity" value=""></td>
+                                    <td><input type="number" step="0.01" id="in-quantity" value="" class="highlight"></td>
                                     <td class="valign-middle" rowspan="2" id="status-over-loss">--</td>
                                 </tr>
                                 <tr>
                                     <td>出库</td>
-                                    <td><input type="date" id="out-date" value="2024-01-15"></td>
+                                    <td><input type="date" id="out-date" value=""></td>
                                     <td>
                                         <select>
                                             <option value="气膜仓" selected>气膜仓</option>
@@ -118,9 +118,9 @@
                                             <option value="等外">等外</option>
                                         </select>
                                     </td>
-                                    <td><input type="number" step="0.1" id="out-moisture" value="13.5"></td>
-                                    <td><input type="number" step="0.1" id="out-impurity" value="0.8"></td>
-                                    <td><input type="number" step="0.01" id="out-quantity" value="49700.00" class="highlight"></td>
+                                    <td><input type="number" step="0.1" id="out-moisture" value=""></td>
+                                    <td><input type="number" step="0.1" id="out-impurity" value=""></td>
+                                    <td><input type="number" step="0.01" id="out-quantity" value="" class="highlight"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -162,7 +162,7 @@
                             <div class="signature-item">财务科科长: <input type="text" placeholder="签名"></div>
                             <div class="signature-item">轮换购销科科长: <input type="text" placeholder="签名"></div>
                             <div class="signature-item">仓储保管科科长: <input type="text" placeholder="签名"></div>
-                            <div class="signature-item">保管员: <input type="text" value="张三" placeholder="签名"></div>
+                            <div class="signature-item">保管员: <input type="text" value="" placeholder="签名"></div>
                         </div>
                     </div>
                 </div>

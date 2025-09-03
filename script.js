@@ -194,25 +194,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearData() {
         if (!confirm('确定要清空所有数据吗？')) return;
 
-        // 清空输入
-        const inputs = document.querySelectorAll('.report-table input, .report-table select');
-        inputs.forEach(input => {
-             if(input.type === 'number' || input.type === 'date') input.value = '';
-             if(input.tagName === 'SELECT') input.selectedIndex = 0;
+        // 获取页面上所有的 input 和 select 元素
+        const formElements = document.querySelectorAll('input, select');
+
+        formElements.forEach(el => {
+            if (el.tagName.toLowerCase() === 'select') {
+                // 重置下拉菜单到第一个选项
+                el.selectedIndex = 0;
+            } else if (el.type !== 'button' && el.type !== 'submit') {
+                // 清空所有其他类型的输入框
+                el.value = '';
+            }
         });
-        
-        // 恢复默认值或清空
-        inDateInput.value = "2023-10-01";
-        outDateInput.value = "2024-01-15";
-        inMoistureInput.value = "14.0";
-        outMoistureInput.value = "13.5";
-        inImpurityInput.value = "1.0";
-        outImpurityInput.value = "0.8";
-        inQuantityInput.value = "50000.00";
-        outQuantityInput.value = "49700.00";
 
-
-        // 清空结果
+        // 清空结果显示区域
         const resultCells = [
             storageTimeEl, naturalLossEl, moistureLossEl, impurityLossEl,
             totalLossEl, actualLossEl, actualLossRateEl, overLossEl, overLossStatusEl
@@ -222,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.classList.remove('warning');
         });
 
+        setDefaultReportDate(); // 将填报日期重置为今天
         updateStatus('数据已清空。');
     }
 
