@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const overLossStatusEl = document.getElementById('status-over-loss');
 
     // 其他UI元素
-    const warningBanner = document.getElementById('warningBanner');
     const statusText = document.getElementById('status-text');
 
     // --- 初始化 ---
@@ -183,9 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
         [overLossStatusEl, actualLossEl, actualLossRateEl, overLossEl].forEach(el => {
             el.classList.toggle('warning', isOverLoss);
         });
-
-        // 控制警告横幅的显示
-        warningBanner.classList.toggle('show', isOverLoss);
         
         if (isOverLoss) {
             updateStatus('计算完成 - 检测到超耗情况！');
@@ -226,17 +222,79 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.classList.remove('warning');
         });
 
-        warningBanner.classList.remove('show');
         updateStatus('数据已清空。');
     }
 
-    // 导出JPG (占位符功能)
+    // 导出JPG
     function exportJPG() {
-        updateStatus('正在导出JPG文件...');
-        alert('导出功能正在开发中。您可以暂时使用系统截图功能。');
-        setTimeout(() => {
-            updateStatus('导出操作已取消。');
-        }, 2000);
+        updateStatus('正在生成报告图片...');
+        
+        const reportElement = document.querySelector('.report-preview');
+        if (!reportElement) {
+            updateStatus('错误：找不到报告元素。');
+            return;
+        }
+
+        // 准备一个数组来存放临时的span元素，以便后续清理
+        const temporarySpans = [];
+        // 选取所有需要被替换的表单元素
+        const elementsToReplace = reportElement.querySelectorAll('input, select');
+
+        // 在截图前，将表单元素替换为纯文本
+        elementsToReplace.forEach(el => {
+            const span = document.createElement('span');
+            let value = '';
+
+            if (el.tagName.toLowerCase() === 'select') {
+                // 对于下拉选择框，获取选中项的文本
+                value = el.options[el.selectedIndex]?.text || '';
+            } else {
+                // 对于所有输入框，直接获取其值
+                value = el.value;
+            }
+
+            span.textContent = value;
+            temporarySpans.push(span); // 保存span以便之后移除
+
+            el.style.display = 'none'; // 隐藏原始的表单元素
+            el.parentNode.insertBefore(span, el); // 在原位置插入纯文本span
+        });
+
+        // 使用 html2canvas 截图
+        html2canvas(reportElement, {
+            scale: 2, // 提高分辨率，使图片更清晰
+            useCORS: true,
+            logging: false,
+        }).then(canvas => {
+            // 创建一个 a 标签用于下载
+            const link = document.createElement('a');
+            
+            // 构建文件名
+            const location = document.getElementById('location-number').value || '未知货位';
+            const date = document.getElementById('report-date').value.replace(/-/g, '') || new Date().toISOString().slice(0, 10).replace(/-/g, '');
+            link.download = `粮食保管损耗报告单_${location}_${date}.jpg`;
+            
+            // 将 canvas 转换为 JPG 格式的数据 URL
+            link.href = canvas.toDataURL('image/jpeg', 0.95); // 0.95 是图片质量
+            
+            // 触发下载
+            link.click();
+            
+            updateStatus(`报告单 ${link.download} 导出成功！`);
+        }).catch(err => {
+            console.error('导出图片时发生错误:', err);
+            updateStatus('错误：图片导出失败。');
+        }).finally(() => {
+            // 无论成功或失败，都执行清理操作
+            // 恢复原始的表单元素
+            elementsToReplace.forEach(el => {
+                el.style.display = ''; 
+            });
+            // 移除临时的span
+            temporarySpans.forEach(span => {
+                span.remove();
+            });
+        });
     }
 
     // 更新状态栏信息
