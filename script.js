@@ -299,11 +299,27 @@ document.addEventListener('DOMContentLoaded', () => {
         statusText.textContent = message;
     }
     
+    // 自动格式化小数位
+    function formatToOneDecimal(event) {
+        const input = event.target;
+        if(input.value === '') return; // 如果输入为空则不处理
+        const value = parseFloat(input.value);
+        if (!isNaN(value)) {
+            input.value = value.toFixed(1);
+        }
+    }
+ 
     // --- 事件监听器绑定 ---
     calculateBtn.addEventListener('click', calculate);
     clearBtn.addEventListener('click', clearData);
     exportBtn.addEventListener('click', exportJPG);
-
+    
+    // 为水分和杂质输入框添加失去焦点事件监听器
+    [inMoistureInput, outMoistureInput, inImpurityInput, outImpurityInput].forEach(input => {
+        input.addEventListener('blur', formatToOneDecimal);
+    });
+ 
+ 
     // 当任何输入改变时，提示用户需要重新计算
     const allInputs = document.querySelectorAll('input, select');
     allInputs.forEach(el => {

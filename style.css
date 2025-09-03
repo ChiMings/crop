@@ -1,3 +1,16 @@
+/* 隐藏特定数字输入框（数量）的微调按钮 */
+#in-quantity::-webkit-inner-spin-button,
+#in-quantity::-webkit-outer-spin-button,
+#out-quantity::-webkit-inner-spin-button,
+#out-quantity::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#in-quantity,
+#out-quantity {
+  -moz-appearance: textfield;
+}
+
 :root {
     /* 设计系统变量 */
 
