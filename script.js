@@ -232,6 +232,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // 创建临时Logo元素，直接使用原始图片
+        const logoImg = document.createElement('img');
+        logoImg.src = 'logo.png';
+        logoImg.style.position = 'absolute';
+        logoImg.style.top = '15px';
+        logoImg.style.left = '15px';
+        logoImg.style.width = '120px';
+        logoImg.style.height = 'auto';
+        logoImg.style.zIndex = '1000';
+        
+        // 设置报告预览区域为相对定位，以便Logo绝对定位
+        const originalPosition = reportElement.style.position;
+        reportElement.style.position = 'relative';
+        
+        // 将Logo插入到报告预览区域
+        reportElement.appendChild(logoImg);
+
         // 准备一个数组来存放临时的span元素，以便后续清理
         const temporarySpans = [];
         // 选取所有需要被替换的表单元素
@@ -283,6 +300,12 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus('错误：图片导出失败。');
         }).finally(() => {
             // 无论成功或失败，都执行清理操作
+            // 移除临时Logo
+            logoImg.remove();
+            
+            // 恢复报告预览区域的原始定位样式
+            reportElement.style.position = originalPosition;
+            
             // 恢复原始的表单元素
             elementsToReplace.forEach(el => {
                 el.style.display = ''; 
