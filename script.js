@@ -188,6 +188,79 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus('计算完成 - 检测到超耗情况！');
         }
     }
+
+    /**
+     * 验证必填字段是否已填写完整
+     * @returns {Object} - 包含验证结果和缺失字段列表的对象
+     */
+    function validateRequiredFields() {
+        const missingFields = [];
+        
+        // 检查填报单位
+        if (!reportUnitTitleInput.value.trim() && !reportUnitHeaderInput.value.trim()) {
+            missingFields.push('• 填报单位');
+        }
+        
+        // 检查填报时间
+        if (!reportDateInput.value.trim()) {
+            missingFields.push('• 填报时间');
+        }
+        
+        // 检查货位号
+        if (!document.getElementById('location-number').value.trim()) {
+            missingFields.push('• 货位号');
+        }
+        
+        // 检查入库日期
+        if (!inDateInput.value.trim()) {
+            missingFields.push('• 入库时间');
+        }
+        
+        // 检查出库日期
+        if (!outDateInput.value.trim()) {
+            missingFields.push('• 出库时间');
+        }
+        
+        // 检查入库水分
+        if (!inMoistureInput.value.trim()) {
+            missingFields.push('• 入库水分%');
+        }
+        
+        // 检查出库水分
+        if (!outMoistureInput.value.trim()) {
+            missingFields.push('• 出库水分%');
+        }
+        
+        // 检查入库杂质
+        if (!inImpurityInput.value.trim()) {
+            missingFields.push('• 入库杂质%');
+        }
+        
+        // 检查出库杂质
+        if (!outImpurityInput.value.trim()) {
+            missingFields.push('• 出库杂质%');
+        }
+        
+        // 检查入库数量
+        if (!inQuantityInput.value.trim()) {
+            missingFields.push('• 入库数量');
+        }
+        
+        // 检查出库数量
+        if (!outQuantityInput.value.trim()) {
+            missingFields.push('• 出库数量');
+        }
+        
+        // 检查是否已进行计算（查看结果表格是否有数据）
+        if (storageTimeEl.textContent === '--' || naturalLossEl.textContent === '--') {
+            missingFields.push('• 请先点击"计算损耗"按钮进行计算');
+        }
+        
+        return {
+            isValid: missingFields.length === 0,
+            missingFields: missingFields
+        };
+    }
     
     // --- 事件处理 ---
     
@@ -224,6 +297,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 导出JPG
     function exportJPG() {
+        updateStatus('正在验证数据完整性...');
+        
+        // 数据完整性检查
+        const validationResult = validateRequiredFields();
+        if (!validationResult.isValid) {
+            updateStatus('错误：数据填写不完整，无法导出！');
+            alert(`请填写完整以下必填项后再导出：\n\n${validationResult.missingFields.join('\n')}`);
+            return;
+        }
+        
         updateStatus('正在生成报告图片...');
         
         const reportElement = document.querySelector('.report-preview');
