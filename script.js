@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
           { "max_value": 12, "rate": 0.0015 },
           { "max_value": null, "rate": 0.002 }
         ],
-        "大豆": [
+        "稻谷": [
           { "max_value": 5, "rate": 0.001 },
           { "max_value": 11, "rate": 0.0015 },
           { "max_value": null, "rate": 0.003 }

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
           { "max_value": 12, "rate": 0.0015 },
           { "max_value": null, "rate": 0.002 }
         ],
-        "大豆": [
+        "稻谷": [
           { "max_value": 5, "rate": 0.001 },
           { "max_value": 11, "rate": 0.0015 },
           { "max_value": null, "rate": 0.003 }
@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const reportUnitTitleInput = document.getElementById('report-unit-title');
     const reportUnitHeaderInput = document.getElementById('report-unit-header');
 
+    // 新增: 型态和储存条件元素
+    const inTypeSelect = document.getElementById('in-type');
+    const outTypeSelect = document.getElementById('out-type');
+    const inConditionTd = document.getElementById('in-condition');
+    const outConditionTd = document.getElementById('out-condition');
+
     const calculateBtn = document.getElementById('calculate-btn');
     const exportBtn = document.getElementById('export-btn');
     const clearBtn = document.getElementById('clear-btn');
@@ -46,6 +52,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const overLossEl = document.getElementById('result-over-loss');
     const overLossStatusEl = document.getElementById('status-over-loss');
     const statusText = document.getElementById('status-text');
+    
+    // 新增: 自定义模态框元素
+    const modal = document.getElementById('custom-confirm-modal');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
+    // 新增: 定义输入阈值
+    const validationThresholds = {
+        "玉米": {
+            moisture: { min: 9.0, max: 14.5 }
+        },
+        "稻谷": {
+            moisture: { min: 9.0, max: 15.0 }
+        },
+        "impurity": { // 杂质通用
+            min: 0.0, max: 2.0
+        }
+    };
+
+    // 新增: 更新储存条件的函数
+    function updateStorageCondition(typeSelect, conditionTd) {
+        const selectedType = typeSelect.value;
+        let condition = '标准仓房'; // 默认是标准仓房
+        if (selectedType === '罩棚仓') {
+            condition = '非标准仓房';
+        } else if (selectedType === '罩棚仓(露天)' || selectedType === '大堆(露天)') {
+            condition = '露天';
+        }
+        conditionTd.textContent = condition;
+    }
 
     // 初始化函数（保持原有逻辑）
     function populateCropSelect() {
@@ -206,8 +242,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clearData() {
-        if (!confirm('确定要清空所有数据吗？')) return;
-
+        // 使用自定义模态框替代confirm
+        modal.classList.add('visible');
+    }
+    
+    // 新增: 执行实际清空逻辑的函数
+    function executeClear() {
         const formElements = document.querySelectorAll('input, select');
 
         formElements.forEach(el => {
@@ -227,8 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.classList.remove('warning');
         });
 
+        updateStorageCondition(inTypeSelect, inConditionTd);
+        updateStorageCondition(outTypeSelect, outConditionTd);
+
         setDefaultReportDate();
         updateStatus('数据已清空。');
+        
+        // 确保焦点可以正常工作
+        document.getElementById('location-number').focus();
     }
 
     // ====== 修复版导出功能 ======
@@ -406,12 +452,39 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('状态:', message);
     }
     
-    function formatToOneDecimal(event) {
+    function formatAndValidateInput(event) {
         const input = event.target;
         if(input.value === '') return;
-        const value = parseFloat(input.value);
-        if (!isNaN(value)) {
-            input.value = value.toFixed(1);
+        
+        let value = parseFloat(input.value);
+        if (isNaN(value)) return;
+
+        const cropName = cropTypeSelect.value;
+        const inputId = input.id;
+        let min, max, originalValue = value;
+
+        if (inputId.includes('moisture')) {
+            const thresholds = validationThresholds[cropName]?.moisture;
+            if (thresholds) {
+                min = thresholds.min;
+                max = thresholds.max;
+            }
+        } else if (inputId.includes('impurity')) {
+            const thresholds = validationThresholds.impurity;
+            min = thresholds.min;
+            max = thresholds.max;
+        }
+
+        if (min !== undefined && max !== undefined) {
+            if (value < min) value = min;
+            if (value > max) value = max;
+        }
+        
+        input.value = value.toFixed(1);
+
+        if (originalValue !== value) {
+            const fieldName = inputId.includes('moisture') ? '水分' : '杂质';
+            updateStatus(`提示: ${cropName}${fieldName}值已自动校正至有效范围 [${min}-${max}]`);
         }
     }
 
@@ -424,12 +497,26 @@ document.addEventListener('DOMContentLoaded', () => {
         exportJPG();
     });
 
+    // 新增: 为自定义模态框按钮添加事件监听
+    modalConfirmBtn.addEventListener('click', () => {
+        modal.classList.remove('visible');
+        executeClear();
+    });
+
+    modalCancelBtn.addEventListener('click', () => {
+        modal.classList.remove('visible');
+    });
+
+    // 新增: 为型态选择框添加事件监听
+    inTypeSelect.addEventListener('change', () => updateStorageCondition(inTypeSelect, inConditionTd));
+    outTypeSelect.addEventListener('change', () => updateStorageCondition(outTypeSelect, outConditionTd));
+
     calculateBtn.addEventListener('click', calculate);
     clearBtn.addEventListener('click', clearData);
     exportBtn.addEventListener('click', exportJPG);
     
     [inMoistureInput, outMoistureInput, inImpurityInput, outImpurityInput].forEach(input => {
-        input.addEventListener('blur', formatToOneDecimal);
+        input.addEventListener('blur', formatAndValidateInput);
     });
 
     const allInputs = document.querySelectorAll('input, select');
@@ -440,6 +527,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 启动
     populateCropSelect();
     setDefaultReportDate();
+    // 新增: 初始化储存条件
+    updateStorageCondition(inTypeSelect, inConditionTd);
+    updateStorageCondition(outTypeSelect, outConditionTd);
     updateStatus('启动成功');
     console.log('应用初始化完成');
 });
