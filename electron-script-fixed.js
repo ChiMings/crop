@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('custom-confirm-modal');
     const modalConfirmBtn = document.getElementById('modal-confirm-btn');
     const modalCancelBtn = document.getElementById('modal-cancel-btn');
+    const alertModal = document.getElementById('custom-alert-modal');
+    const alertMessageEl = document.getElementById('custom-alert-message');
+    const alertOkBtn = document.getElementById('modal-alert-ok-btn');
 
     // 新增: 定义输入阈值
     const validationThresholds = {
@@ -124,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isNaN(inQuantity) || isNaN(outQuantity) || inDate > outDate) {
             updateStatus('错误：请输入有效的日期和数量！');
-            alert('错误：请输入有效的日期和数量！\n- 入库数量和出库数量必须是数字。\n- 出库日期不能早于入库日期。');
+            showCustomAlert('错误：请输入有效的日期和数量！\n- 入库数量和出库数量必须是数字。\n- 出库日期不能早于入库日期。');
             return;
         }
 
@@ -169,6 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         handleOverLoss(overLoss);
         updateStatus('计算完成。');
+
+        // 修复: 使用setTimeout将焦点设置操作延迟到事件队列末尾，确保在DOM更新和渲染完成后再执行
+        setTimeout(() => {
+            document.getElementById('location-number').focus();
+        }, 0);
     }
 
     function handleOverLoss(overLossValue) {
@@ -284,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const validationResult = validateRequiredFields();
         if (!validationResult.isValid) {
             updateStatus('错误：数据填写不完整，无法导出！');
-            alert(`请填写完整以下必填项后再导出：\n\n${validationResult.missingFields.join('\n')}`);
+            showCustomAlert(`请填写完整以下必填项后再导出：\n\n${validationResult.missingFields.join('\n')}`);
             return;
         }
         
@@ -452,6 +460,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('状态:', message);
     }
     
+    // 新增: 显示自定义提示框的函数
+    function showCustomAlert(message) {
+        alertMessageEl.textContent = message;
+        alertModal.classList.add('visible');
+        alertOkBtn.focus();
+    }
+
     function formatAndValidateInput(event) {
         const input = event.target;
         if(input.value === '') return;
@@ -505,6 +520,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalCancelBtn.addEventListener('click', () => {
         modal.classList.remove('visible');
+    });
+
+    alertOkBtn.addEventListener('click', () => {
+        alertModal.classList.remove('visible');
     });
 
     // 新增: 为型态选择框添加事件监听

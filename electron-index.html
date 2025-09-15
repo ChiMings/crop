@@ -74,6 +74,7 @@
             margin-bottom: 24px;
             color: #666;
             font-size: 14px;
+            white-space: pre-wrap; /* 允许换行符生效 */
         }
         .modal-buttons {
             display: flex;
@@ -102,6 +103,13 @@
         }
          .modal-buttons .btn-cancel:hover {
             background-color: #D1D5DB;
+        }
+        .modal-buttons .btn-primary {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .modal-buttons .btn-primary:hover {
+            background-color: #2563EB;
         }
     </style>
 </head>
@@ -245,13 +253,7 @@
                                 <li>所有空格均为必填项，请勿遗漏。</li>
                                 <li>本表格不具备数据存储功能。</li>
                                 <li>入库水分需填写为大于或等于出库水分的数值。</li>
-                                <li>特定指标填写须严格遵守如下阈值，超出范围不可填写：
-                                    <ul>
-                                        <li>稻谷水分：9.0-15.0</li>
-                                        <li>玉米水分：9.0-14.5</li>
-                                        <li>杂质（稻谷、玉米均适用）：0.0-2.0</li>
-                                    </ul>
-                                </li>
+                                <li>特定指标阈值：稻谷水分 (9.0-15.0)；玉米水分 (9.0-14.5)；杂质 (0.0-2.0)。</li>
                             </ol>
                         </div>
 
@@ -288,6 +290,17 @@
             <div class="modal-buttons">
                 <button id="modal-cancel-btn" class="btn-cancel">取消</button>
                 <button id="modal-confirm-btn" class="btn-confirm">确定清空</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增: 自定义提示框 HTML -->
+    <div id="custom-alert-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <h3>提示</h3>
+            <p id="custom-alert-message"></p>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button id="modal-alert-ok-btn" class="btn-primary">确定</button>
             </div>
         </div>
     </div>
