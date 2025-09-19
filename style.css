@@ -458,3 +458,29 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+@keyframes modal-bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.modal-overlay.visible .modal-dialog {
+    transform: scale(1);
+    animation: modal-bounce-in 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.modal-dialog h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}

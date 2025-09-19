@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- 初始化 ---
     function populateCropSelect() {
-        const cropNames = ["玉米", "稻谷", "小麦", "大豆"];
+        const cropNames = ["玉米", "稻谷"];
         cropTypeSelect.innerHTML = cropNames.map(name => `<option value="${name}">${name}</option>`).join('');
     }
 
@@ -199,6 +199,37 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus(message) {
         statusText.textContent = message;
     }
+
+    function validateMoistureImpurityInput(event) {
+        const input = event.target;
+        let valueStr = input.value.trim();
+        if (valueStr === '') return;
+
+        // 检查是否为无效的数字格式
+        if (isNaN(valueStr) || valueStr.endsWith('.') || (valueStr.match(/\./g) || []).length > 1 || (valueStr.lastIndexOf('-') > 0)) {
+            showCustomAlert(`输入无效: "${valueStr}" 不是一个有效的数字。`);
+            input.value = '';
+            return;
+        }
+
+        let value = parseFloat(valueStr);
+
+        if (value < 0) {
+            showCustomAlert('输入无效: 水分和杂质不能为负数。');
+            input.value = '0.0';
+            return;
+        }
+
+        // 检查小数点位数
+        if (valueStr.includes('.') && valueStr.split('.')[1].length > 1) {
+            showCustomAlert('输入格式错误: 水分和杂质只允许一位小数。');
+            input.value = ''; // 清空输入框，强制用户重新输入
+            return;
+        }
+
+        // 自动格式化为一位小数
+        input.value = value.toFixed(1);
+    }
     
     // --- 事件监听器绑定 ---
     calculateBtn.addEventListener('click', calculate);
@@ -216,6 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     alertOkBtn.addEventListener('click', () => {
         alertModal.classList.remove('visible');
+    });
+
+    [beforeMoistureInput, beforeImpurityInput, afterMoistureInput, afterImpurityInput].forEach(input => {
+        input.addEventListener('blur', validateMoistureImpurityInput);
     });
 
     const allInputs = document.querySelectorAll('input, select');

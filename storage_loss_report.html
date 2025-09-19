@@ -90,6 +90,9 @@
         .modal-buttons .btn-primary:hover {
             background-color: #2563EB;
         }
+        .summary-row td, .summary-row th {
+            border-top: 2px solid #999;
+        }
     </style>
 </head>
 <body>
@@ -132,15 +135,15 @@
                         <table class="report-table">
                             <thead>
                                 <tr>
-                                    <th class="col-item">项目</th>
-                                    <th class="col-date">时间</th>
-                                    <th class="col-type">型态</th>
-                                    <th class="col-condition">储存条件</th>
-                                    <th class="col-grade">等级</th>
-                                    <th class="col-percent">水分%</th>
-                                    <th class="col-percent">杂质%</th>
-                                    <th class="col-quantity">数量</th>
-                                    <th class="col-status">是否超耗</th>
+                                    <th style="width: 10%;">项目</th>
+                                    <th style="width: 14%;">时间</th>
+                                    <th style="width: 12%;">型态</th>
+                                    <th style="width: 12%;">储存条件</th>
+                                    <th style="width: 10%;">等级</th>
+                                    <th style="width: 8%;">水分%</th>
+                                    <th style="width: 8%;">杂质%</th>
+                                    <th style="width: 14%;">数量</th>
+                                    <th style="width: 12%;">是否超耗</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -199,16 +202,13 @@
                                     <td><input type="number" step="0.1" id="out-impurity" value=""></td>
                                     <td><input type="number" step="0.01" id="out-quantity" value="" class="highlight"></td>
                                 </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="report-table">
-                            <thead>
-                                <tr>
+                                <tr class="summary-row">
                                     <th colspan="5">损耗量理论计算值</th>
                                     <th colspan="3">实际损耗统计</th>
+                                    <!-- This empty cell is for alignment with the '是否超耗' column -->
+                                    <th></th> 
                                 </tr>
-                                <tr>
+                                <tr class="summary-row">
                                     <th>保管时间(月)</th>
                                     <th>自然损耗量</th>
                                     <th>水分减量</th>
@@ -217,10 +217,10 @@
                                     <th>实际储存损耗</th>
                                     <th>实际储存损耗率</th>
                                     <th>超耗数量</th>
+                                    <!-- This empty cell is for alignment with the '是否超耗' column -->
+                                    <th></th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+                                <tr class="summary-row">
                                     <td id="result-storage-time">--</td>
                                     <td id="result-natural-loss">--</td>
                                     <td id="result-moisture-loss">--</td>
@@ -229,6 +229,8 @@
                                     <td id="result-actual-loss">--</td>
                                     <td id="result-actual-loss-rate">--</td>
                                     <td id="result-over-loss">--</td>
+                                     <!-- This empty cell is for alignment with the '是否超耗' column -->
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -284,7 +286,7 @@
     <!-- 自定义提示框 HTML -->
     <div id="custom-alert-modal" class="modal-overlay">
         <div class="modal-dialog">
-            <h3>提示</h3>
+            <h3><span class="material-symbols-rounded">info</span>提示</h3>
             <p id="custom-alert-message"></p>
             <div class="modal-buttons" style="justify-content: center;">
                 <button id="modal-alert-ok-btn" class="btn-primary">确定</button>

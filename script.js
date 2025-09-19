@@ -317,9 +317,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function formatAndValidateInput(event) {
         const input = event.target;
-        if(input.value === '') return;
+        let valueStr = input.value.trim();
+        if (valueStr === '') return;
+
+        // 新增：检查是否为无效的数字格式
+        if (isNaN(valueStr) || valueStr.endsWith('.') || (valueStr.match(/\./g) || []).length > 1 || (valueStr.lastIndexOf('-') > 0)) {
+            showCustomAlert(`输入无效: "${valueStr}" 不是一个有效的数字。`);
+            input.value = '';
+            return;
+        }
+
+        // 新增：检查小数点位数
+        if (valueStr.includes('.') && valueStr.split('.')[1].length > 1) {
+            showCustomAlert('输入格式错误: 水分和杂质只允许一位小数。');
+            input.value = ''; // 清空输入框，强制用户重新输入
+            return;
+        }
         
-        let value = parseFloat(input.value);
+        let value = parseFloat(valueStr);
         if (isNaN(value)) return;
 
         const cropName = cropTypeSelect.value;
