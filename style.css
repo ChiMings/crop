@@ -54,16 +54,17 @@ body {
 
 .site-logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    height: 50px; /* 您可以根据需要调整Logo的高度 */
-    width: auto;
+    top: 85px; /* Adjust this value to be below the navbar */
+    left: 40px;
+    max-width: 150px;
+    z-index: 10;
 }
 
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+    padding-top: 80px; /* Add padding to container to avoid content being hidden by nav-bar */
 }
 
 .header {
@@ -409,4 +410,41 @@ body {
     .main-content {
         grid-template-columns: 1fr;
     }
+}
+
+.nav-bar {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center; /* Center navigation links */
+    align-items: center;
+}
+.nav-bar .nav-links {
+    display: flex;
+    gap: 25px;
+}
+.nav-bar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-bar a:hover {
+    background-color: #f0f4f8;
+}
+.nav-bar a.active {
+    background-color: #e2e8f0;
+    color: #1a202c;
+    font-weight: 600;
 }
