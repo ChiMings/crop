@@ -38,8 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // 在这个版本中，我们没有基于作物品种的特定计算逻辑，
         // 但保留了这个函数以便未来扩展或保持界面一致性。
         // 您可以手动添加作物品种。
-        const cropNames = ["玉米", "稻谷", "小麦", "大豆"];
+        const cropNames = ["玉米", "稻谷"];
         cropTypeSelect.innerHTML = cropNames.map(name => `<option value="${name}">${name}</option>`).join('');
+    }
+
+    function populateYearSelect() {
+        const yearSelect = document.getElementById('production-year');
+        const currentYear = new Date().getFullYear();
+        for (let year = currentYear; year >= 2020; year--) {
+            yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+        }
     }
 
     function setDefaultReportDate() {
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dayDiff = (outDate - inDate) / (1000 * 60 * 60 * 24);
         const storageMonths = Math.round(dayDiff / 30);
 
-        const surplusQuantity = outQuantity - storageQuantity;
+        const surplusQuantity = storageQuantity - outQuantity;
         const surplusRate = (surplusQuantity / storageQuantity) * 100;
 
         storageTimeEl.textContent = storageMonths;
@@ -241,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 启动 ---
     populateCropSelect();
+    populateYearSelect();
     setDefaultReportDate();
     updateStorageCondition(inTypeSelect, inConditionTd);
     updateStorageCondition(outTypeSelect, outConditionTd);

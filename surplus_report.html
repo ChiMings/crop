@@ -90,6 +90,11 @@
         .modal-buttons .btn-primary:hover {
             background-color: #2563EB;
         }
+
+        /* Custom styles for merged table alignment */
+        .summary-row td, .summary-row th {
+            border-top: 2px solid #999;
+        }
     </style>
 </head>
 <body>
@@ -132,20 +137,22 @@
                         <table class="report-table">
                             <thead>
                                 <tr>
-                                    <th>项目</th>
-                                    <th>时间</th>
-                                    <th>生产年度</th>
-                                    <th>型态</th>
-                                    <th>储存条件</th>
-                                    <th>等级</th>
-                                    <th>溢余原因</th>
+                                    <th style="width: 10%;">项目</th>
+                                    <th style="width: 15%;">时间</th>
+                                    <th style="width: 12.5%;">生产年度</th>
+                                    <th style="width: 12.5%;">型态</th>
+                                    <th style="width: 15%;">储存条件</th>
+                                    <th style="width: 10%;">等级</th>
+                                    <th style="width: 25%;">溢余原因</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>入库</td>
                                     <td><input type="date" id="in-date"></td>
-                                    <td><input type="text" id="in-year"></td>
+                                    <td rowspan="2" style="vertical-align: middle;">
+                                        <select id="production-year"></select>
+                                    </td>
                                     <td>
                                         <select id="in-type">
                                             <option value="气膜仓" selected>气膜仓</option>
@@ -166,12 +173,11 @@
                                             <option value="三等">三等</option>
                                         </select>
                                     </td>
-                                    <td rowspan="2"><input type="text" id="surplus-reason"></td>
+                                    <td rowspan="4" style="vertical-align: middle;"><input type="text" id="surplus-reason"></td>
                                 </tr>
                                 <tr>
                                     <td>出库</td>
                                     <td><input type="date" id="out-date"></td>
-                                    <td><input type="text" id="out-year"></td>
                                     <td>
                                         <select id="out-type">
                                             <option value="气膜仓" selected>气膜仓</option>
@@ -193,20 +199,15 @@
                                         </select>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="report-table">
-                            <tbody>
-                                <tr>
-                                    <td>保管时间(月)</td>
-                                    <td>保管账数量</td>
-                                    <td>出库数量</td>
-                                    <td>溢余数量</td>
-                                    <td>溢余率</td>
+                                <tr class="summary-row">
+                                    <th colspan="2">保管时间(月)</th>
+                                    <th>保管账数量</th>
+                                    <th>出库数量</th>
+                                    <th>溢余数量</th>
+                                    <th>溢余率</th>
                                 </tr>
-                                <tr>
-                                    <td id="result-storage-time">--</td>
+                                <tr class="summary-row">
+                                    <td colspan="2" id="result-storage-time">--</td>
                                     <td><input type="number" step="0.01" id="storage-quantity" class="highlight"></td>
                                     <td><input type="number" step="0.01" id="out-quantity" class="highlight"></td>
                                     <td id="result-surplus-quantity">--</td>
@@ -214,6 +215,15 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="instructions-section">
+                            <h4>填表说明：</h4>
+                            <ol>
+                                <li>表头括号内请填写粮食性质。</li>
+                                <li>所有空格均为必填项，请勿遗漏。</li>
+                                <li>本表格不具备数据存储功能。</li>
+                            </ol>
+                        </div>
 
                         <div class="signature-section">
                             <div class="signature-item">总经理: <input type="text" placeholder="签名"></div>
