@@ -23,6 +23,15 @@
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "**/*",
+      "!web_crop/**/*"
+    ],
+    "icon": "build/icon.png",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
     "linux": {
       "target": [
         {
@@ -31,7 +40,8 @@
         }
       ],
       "category": "Graphics",
-      "maintainer": "开发者 <developer@example.com>"
+      "maintainer": "开发者 <developer@example.com>",
+      "icon": "build/icon.png"
     }
   }
 }
