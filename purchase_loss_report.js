@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 检查小数点位数
         if (valueStr.includes('.') && valueStr.split('.')[1].length > 1) {
-            showCustomAlert('输入格式错误: 水分和杂质只允许一位小数。');
+            showCustomAlert('输入格式错误: 水分、杂质输入值仅允许保留一位小数');
             input.value = ''; // 清空输入框，强制用户重新输入
             return;
         }

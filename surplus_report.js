@@ -45,8 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateYearSelect() {
         const yearSelect = document.getElementById('production-year');
         const currentYear = new Date().getFullYear();
-        for (let year = currentYear; year >= 2020; year--) {
+        // 设置固定的年份范围从 2010 到 2040
+        for (let year = 2040; year >= 2010; year--) {
             yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+        }
+        // 默认选中当前年份, 如果当前年份在范围内
+        if (currentYear >= 2010 && currentYear <= 2040) {
+            yearSelect.value = currentYear;
+        } else {
+            // 如果当前年份超出范围，提供一个默认值
+            yearSelect.value = new Date().getFullYear();
         }
     }
 
@@ -97,10 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // 新增：溢余计算的逻辑验证
+        if (outQuantity <= storageQuantity) {
+            updateStatus('错误：溢余计算中，出库数量应大于保管账数量！');
+            showCustomAlert('错误：出库数量应大于保管账数量。');
+            return;
+        }
+
         const dayDiff = (outDate - inDate) / (1000 * 60 * 60 * 24);
         const storageMonths = Math.round(dayDiff / 30);
 
-        const surplusQuantity = storageQuantity - outQuantity;
+        // 修正：溢余数量的计算公式
+        const surplusQuantity = outQuantity - storageQuantity;
         const surplusRate = (surplusQuantity / storageQuantity) * 100;
 
         storageTimeEl.textContent = storageMonths;
@@ -178,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const temporarySpans = [];
-        const elementsToReplace = reportElement.querySelectorAll('input, select');
+        const elementsToReplace = reportElement.querySelectorAll('input, select, textarea');
 
         elementsToReplace.forEach(el => {
             const span = document.createElement('span');
