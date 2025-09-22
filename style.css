@@ -231,7 +231,7 @@ body {
 }
 
 .report-preview {
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e5e7eb; /* <-- 恢复此处的浅灰色边框 */
     background: var(--surface-color);
     padding: 30px;
     font-family: "SimSun", serif;
@@ -266,26 +266,46 @@ body {
     font-family: "SimHei", "黑体", var(--font-family-system);
 }
 
+/* --- New, Robust Table Border Styling --- */
 .report-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 0; /* 改为0，以支持表格连接 */
-    font-size: 14px; /* 增加表格字体大小 */
+    margin-bottom: 0;
+    font-size: 14px;
 }
 
-/* 移除表格间的灰色条 */
+/* Set top border for the first table only */
+.report-table:first-of-type {
+    border-top: 2px solid black;
+}
+/* Set bottom border for the last table only */
+.report-table:last-of-type {
+    border-bottom: 2px solid black;
+}
+
+/* This rule ensures the border between connected tables is the standard 1px width */
 .report-table + .report-table {
-    border-top: none;
+    border-top: 1px solid black;
 }
 
 .report-table th,
 .report-table td {
-    border: 1px solid black; /* 内部框线使用黑色 */
+    border: 1px solid black;
     padding: 8px;
     text-align: center;
 }
 
-/* 移除左右外边框 */
+/* Explicitly set thick outer side borders */
+.report-table th:first-child,
+.report-table td:first-child {
+    border-left: 2px solid black;
+}
+.report-table th:last-child,
+.report-table td:last-child {
+    border-right: 2px solid black;
+}
+
+/* Remove outer side borders */
 .report-table th:first-child,
 .report-table td:first-child {
     border-left: none;
@@ -295,17 +315,11 @@ body {
     border-right: none;
 }
 
-/* 上下外边框加粗 */
-.report-preview .report-table:first-of-type thead th {
-    border-top: 2px solid black;
-}
-.report-preview .report-table:last-of-type tbody tr:last-child td {
-    border-bottom: 2px solid black;
-}
-
 .report-table .valign-middle {
     vertical-align: middle;
 }
+
+/* The old rules for manually creating thick borders are no longer needed. */
 
 .report-table th {
     background-color: var(--background-color);

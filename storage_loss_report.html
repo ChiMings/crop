@@ -90,9 +90,13 @@
         .modal-buttons .btn-primary:hover {
             background-color: #2563EB;
         }
+
+        /* Custom styles for merged table alignment - This rule is causing inconsistent borders */
+        /*
         .summary-row td, .summary-row th {
             border-top: 2px solid #999;
         }
+        */
     </style>
 </head>
 <body>
@@ -216,9 +220,7 @@
                                     <th>合计</th>
                                     <th>实际储存损耗</th>
                                     <th>实际储存损耗率</th>
-                                    <th>超耗数量</th>
-                                    <!-- This empty cell is for alignment with the '是否超耗' column -->
-                                    <th></th>
+                                    <th colspan="2">超耗数量</th>
                                 </tr>
                                 <tr class="summary-row">
                                     <td id="result-storage-time">--</td>
@@ -228,9 +230,7 @@
                                     <td id="result-total-loss" class="highlight">--</td>
                                     <td id="result-actual-loss">--</td>
                                     <td id="result-actual-loss-rate">--</td>
-                                    <td id="result-over-loss">--</td>
-                                     <!-- This empty cell is for alignment with the '是否超耗' column -->
-                                    <td></td>
+                                    <td id="result-over-loss" colspan="2">--</td>
                                 </tr>
                             </tbody>
                         </table>
