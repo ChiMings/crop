@@ -1,12 +1,12 @@
 {
   "name": "crop-tool",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "粮食保管损耗报告单生成系统",
   "main": "main.js",
-  "homepage": "https://github.com/example/crop-tool",
+  "homepage": "https://github.com/ChiMings/crop",
   "author": {
-    "name": "开发者",
-    "email": "developer@example.com"
+    "name": "ChiMing",
+    "email": "859025462@qq.com"
   },
   "scripts": {
     "start": "electron .",
@@ -19,7 +19,7 @@
   },
   "build": {
     "appId": "com.example.crop-tool",
-    "productName": "Crop Tool",
+    "productName": "CropTool",
     "directories": {
       "output": "dist"
     },
@@ -27,7 +27,7 @@
       "**/*",
       "!web_crop/**/*"
     ],
-    "icon": "build/icon.png",
+    "icon": "build/512.png",
     "win": {
       "target": "nsis",
       "icon": "build/icon.png"
@@ -40,8 +40,8 @@
         }
       ],
       "category": "Graphics",
-      "maintainer": "开发者 <developer@example.com>",
-      "icon": "build/icon.png"
+      "maintainer": "ChiMing <859025462@qq.com>",
+      "icon": "build"
     }
   }
 }
