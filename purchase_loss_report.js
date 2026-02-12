@@ -68,19 +68,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isNaN(beforeQuantity) || isNaN(afterQuantity)) {
             updateStatus('错误：请输入有效的数量！');
-            showCustomAlert('错误：请输入有效的数量！<br>- "整理前数量"和"整理后数量"必须是数字。');
+            showCustomAlert('错误：请输入有效的数量！<br>- "入库数量"和"平仓数量"必须是数字。');
             return;
         }
 
         if (beforeQuantity <= 0) {
-            updateStatus('错误："整理前数量"必须大于0！');
-            showCustomAlert('错误："整理前数量"必须大于0！');
+            updateStatus('错误："入库数量"必须大于0！');
+            showCustomAlert('错误："入库数量"必须大于0！');
             return;
         }
         
         if (beforeQuantity < afterQuantity) {
-            updateStatus('警告："整理后数量"大于"整理前数量"');
-            showCustomAlert('警告："整理后数量"大于"整理前数量"，这将导致负损耗。请检查输入是否正确。');
+            updateStatus('警告："平仓数量"大于"入库数量"');
+            showCustomAlert('警告："平仓数量"大于"入库数量"，这将导致负损耗。请检查输入是否正确。');
         }
 
         const lossQuantity = beforeQuantity - afterQuantity;
@@ -97,14 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!reportUnitTitleInput.value.trim() && !reportUnitHeaderInput.value.trim()) missingFields.push('• 填报单位');
         if (!reportDateInput.value) missingFields.push('• 填报时间');
         if (!document.getElementById('location-number').value.trim()) missingFields.push('• 货位号');
-        if (!beforeDateInput.value) missingFields.push('• 整理前时间');
-        if (!beforeMoistureInput.value.trim()) missingFields.push('• 整理前水分%');
-        if (!beforeImpurityInput.value.trim()) missingFields.push('• 整理前杂质%');
-        if (!beforeQuantityInput.value.trim()) missingFields.push('• 整理前数量');
-        if (!afterDateInput.value) missingFields.push('• 整理后时间');
-        if (!afterMoistureInput.value.trim()) missingFields.push('• 整理后水分%');
-        if (!afterImpurityInput.value.trim()) missingFields.push('• 整理后杂质%');
-        if (!afterQuantityInput.value.trim()) missingFields.push('• 整理后数量');
+        if (!beforeDateInput.value) missingFields.push('• 入库时间');
+        if (!beforeMoistureInput.value.trim()) missingFields.push('• 入库水分%');
+        if (!beforeImpurityInput.value.trim()) missingFields.push('• 入库杂质%');
+        if (!beforeQuantityInput.value.trim()) missingFields.push('• 入库数量');
+        if (!afterDateInput.value) missingFields.push('• 平仓时间');
+        if (!afterMoistureInput.value.trim()) missingFields.push('• 平仓水分%');
+        if (!afterImpurityInput.value.trim()) missingFields.push('• 平仓杂质%');
+        if (!afterQuantityInput.value.trim()) missingFields.push('• 平仓数量');
         if (lossQuantityEl.textContent === '--') missingFields.push('• 请先点击"计算"按钮');
         
         return {
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const link = document.createElement('a');
             const location = document.getElementById('location-number').value || '未知货位';
             const date = document.getElementById('report-date').value.replace(/-/g, '') || new Date().toISOString().slice(0, 10).replace(/-/g, '');
-            link.download = `收购整理损耗报告单_${location}_${date}.jpg`;
+            link.download = `入库过程损耗报告单_${location}_${date}.jpg`;
             link.href = canvas.toDataURL('image/jpeg', 0.95);
             link.click();
             updateStatus(`报告单 ${link.download} 导出成功！`);

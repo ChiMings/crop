@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isNaN(inQuantity) || isNaN(outQuantity) || inDate > outDate) {
             updateStatus('错误：请输入有效的日期和数量！');
-            showCustomAlert('错误：请输入有效的日期和数量！\n- 入库数量和出库数量必须是数字。\n- 出库日期不能早于入库日期。');
+            showCustomAlert('错误：请输入有效的日期和数量！\n- 平仓数量和出库数量必须是数字。\n- 出库日期不能早于平仓日期。');
             return;
         }
 
@@ -197,13 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!reportUnitTitleInput.value.trim() && !reportUnitHeaderInput.value.trim()) missingFields.push('• 填报单位');
         if (!reportDateInput.value.trim()) missingFields.push('• 填报时间');
         if (!document.getElementById('location-number').value.trim()) missingFields.push('• 货位号');
-        if (!inDateInput.value.trim()) missingFields.push('• 入库时间');
+        if (!inDateInput.value.trim()) missingFields.push('• 平仓时间');
         if (!outDateInput.value.trim()) missingFields.push('• 出库时间');
-        if (!inMoistureInput.value.trim()) missingFields.push('• 入库水分%');
+        if (!inMoistureInput.value.trim()) missingFields.push('• 平仓水分%');
         if (!outMoistureInput.value.trim()) missingFields.push('• 出库水分%');
-        if (!inImpurityInput.value.trim()) missingFields.push('• 入库杂质%');
+        if (!inImpurityInput.value.trim()) missingFields.push('• 平仓杂质%');
         if (!outImpurityInput.value.trim()) missingFields.push('• 出库杂质%');
-        if (!inQuantityInput.value.trim()) missingFields.push('• 入库数量');
+        if (!inQuantityInput.value.trim()) missingFields.push('• 平仓数量');
         if (!outQuantityInput.value.trim()) missingFields.push('• 出库数量');
         if (storageTimeEl.textContent === '--' || naturalLossEl.textContent === '--') missingFields.push('• 请先点击"计算损耗"按钮进行计算');
         

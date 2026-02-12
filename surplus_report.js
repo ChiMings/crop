@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isNaN(storageQuantity) || isNaN(outQuantity) || !inDateInput.value || !outDateInput.value || inDate > outDate) {
             updateStatus('错误：请输入有效的日期和数量！');
-            showCustomAlert('错误：请输入有效的日期和数量！<br>- 保管账数量和出库数量必须是数字。<br>- 出库日期不能早于入库日期。');
+            showCustomAlert('错误：请输入有效的日期和数量！<br>- 保管账数量和出库数量必须是数字。<br>- 出库日期不能早于平仓日期。');
             return;
         }
         
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!reportUnitTitleInput.value.trim() && !reportUnitHeaderInput.value.trim()) missingFields.push('• 填报单位');
         if (!reportDateInput.value) missingFields.push('• 填报时间');
         if (!document.getElementById('location-number').value.trim()) missingFields.push('• 货位号');
-        if (!inDateInput.value) missingFields.push('• 入库时间');
+        if (!inDateInput.value) missingFields.push('• 平仓时间');
         if (!outDateInput.value) missingFields.push('• 出库时间');
         if (!storageQuantityInput.value.trim()) missingFields.push('• 保管账数量');
         if (!outQuantityInput.value.trim()) missingFields.push('• 出库数量');

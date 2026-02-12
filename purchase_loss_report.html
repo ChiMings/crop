@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>收购整理损耗报告单生成系统</title>
+    <title>入库过程损耗报告单生成系统</title>
     <script src="html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="material-symbols.css" />
@@ -118,7 +118,7 @@
                     
                     <div class="report-preview">
                         <div class="report-title">
-                           (<input type="text" id="report-unit-title" class="inline-input" value="">) 收购整理损耗报告单
+                           (<input type="text" id="report-unit-title" class="inline-input" value="">) 入库过程损耗报告单
                         </div>
                         
                         <div class="report-header">
@@ -150,7 +150,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>整理前</td>
+                                    <td>入库</td>
                                     <td><input type="date" id="before-date"></td>
                                     <td>
                                         <select id="before-type">
@@ -176,7 +176,7 @@
                                     <td><input type="number" step="0.01" id="before-quantity" class="highlight"></td>
                                 </tr>
                                 <tr>
-                                    <td>整理后</td>
+                                    <td>平仓</td>
                                     <td><input type="date" id="after-date"></td>
                                     <td>
                                         <select id="after-type">
@@ -246,7 +246,7 @@
 
     <div class="status-bar">
         <span id="status-text">就绪</span>
-        <span style="float: right;">收购整理损耗报告单生成系统</span>
+        <span style="float: right;">入库过程损耗报告单生成系统</span>
     </div>
 
     <!-- 自定义确认对话框 HTML -->

@@ -152,7 +152,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>入库</td>
+                                    <td>平仓</td>
                                     <td><input type="date" id="in-date" value=""></td>
                                     <td>
                                         <select id="in-type">
@@ -208,9 +208,7 @@
                                 </tr>
                                 <tr class="summary-row">
                                     <th colspan="5">损耗量理论计算值</th>
-                                    <th colspan="3">实际损耗统计</th>
-                                    <!-- This empty cell is for alignment with the '是否超耗' column -->
-                                    <th></th> 
+                                    <th colspan="4" style="text-align: center;">实际损耗统计</th>
                                 </tr>
                                 <tr class="summary-row">
                                     <th>保管时间(月)</th>
@@ -241,7 +239,7 @@
                                 <li>表头括号内请填写粮食性质。</li>
                                 <li>所有空格均为必填项，请勿遗漏。</li>
                                 <li>本表格不具备数据存储功能。</li>
-                                <li>入库水分需填写为大于或等于出库水分的数值。</li>
+                                <li>平仓水分需填写为大于或等于出库水分的数值。</li>
                                 <li>特定指标阈值：稻谷水分 (9.0-15.0)；玉米水分 (9.0-14.5)；杂质 (0.0-2.0)。</li>
                             </ol>
                         </div>
